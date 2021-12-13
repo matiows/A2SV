@@ -12,5 +12,5 @@ class Solution(object):
             elif(i % 5 == 0):
                 str.append("Buzz")
             else:
-                str.append("{}".format(i))
+                str.append("% s" % i)
         return str
