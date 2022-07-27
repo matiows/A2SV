@@ -12,13 +12,12 @@ class Solution:
             
             while l < r:
                 check = nums[i] + nums[l] + nums[r]
-                if check - target == 0:
-                    return check
-                
                 if abs(check - target) < abs(closest - target):
                     closest = check
-                    
-                if check < target:
+                
+                if check == target:
+                    return check
+                elif check < target:
                     l += 1
                 else:
                     r -= 1
