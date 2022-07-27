@@ -3,31 +3,19 @@ class Solution:
         start = 0
         end = len(nums) - 1
         
-        while start < end:
-            mid = (start + end) // 2
-            if nums[mid] > nums[end]:
-                start = mid + 1
-            else:
-                end = mid
-        
-        pivot = start
-        start = 0
-        end = len(nums) - 1
-        
-        if target >= nums[pivot] and target <= nums[end]:
-            start = pivot
-        else:
-            end = pivot
-        
         while start <= end:
             mid = (start + end) // 2
             if nums[mid] == target:
                 return mid
             
-            if nums[mid] < target:
-                start = mid + 1
+            if nums[start] <= nums[mid]:
+                if target < nums[start] or target > nums[mid]:
+                    start = mid+1
+                else:
+                    end = mid
             else:
-                end = mid - 1
+                if target > nums[end] or target < nums[mid]:
+                    end = mid - 1
+                else:
+                    start = mid
         return -1
-
-            
