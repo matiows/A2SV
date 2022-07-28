@@ -3,7 +3,6 @@ class Solution:
         output = [[]]
         
         for num in nums:
-            print (output)
-            output += [curr + [num] for curr in output]
-        
+            for i in range(len(output)):
+                output += [output[i] + [num]]
         return output
