@@ -1,15 +1,21 @@
 class Solution:
     def combinationSum4(self, nums: List[int], target: int) -> int:
-#   bottom up dp solution 
-#   Start by intializing an array with the size of target
-#   and build up how many ways there are to get to that target
-        dp = [0] * (target + 1)
+
+        memo = {}
+        def backt(summ):
+            if summ == target:
+                return 1
+            if summ > target:
+                return 0
+            if summ in memo:
+                return memo[summ]
+            count = 0   
+            
+            for num in nums: 
+                if summ + num <= target:
+                    count += backt(summ + num)
+                    
+            memo[summ] = count        
+            return memo[summ]  
         
-        dp[0] = 1
-        for i in range(target + 1):
-            for val in nums:
-                if val + i <= target:
-                    dp[i+val] += dp[i]
-        
-        
-        return dp[-1]
+        return backt(0)
