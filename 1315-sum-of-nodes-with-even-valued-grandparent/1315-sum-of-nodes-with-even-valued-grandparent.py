@@ -8,21 +8,28 @@ class Solution:
     def sumEvenGrandparent(self, root: TreeNode) -> int:
 
         total = 0
-        def dfs(gpar, par):
+        def dfs(node):
             
-            if not par:
+            if not node:
                 return
             
             nonlocal total
             
-            if gpar and gpar.val % 2 == 0:
-                if par.left:
-                    total+=par.left.val
-                if par.right:
-                    total+=par.right.val
+            if node and node.val % 2 == 0:
+                if node.left and node.left.left:
+                    total+=node.left.left.val
+                    
+                if node.left and node.left.right:
+                    total+=node.left.right.val
+                    
+                if node.right and node.right.left:
+                    total+=node.right.left.val
+                    
+                if node.right and node.right.right:
+                    total+=node.right.right.val
+                    
+            dfs(node.left)
+            dfs(node.right)
             
-            dfs(par,par.left)
-            dfs(par,par.right)
-            
-        dfs(None, root)
+        dfs(root)
         return total
