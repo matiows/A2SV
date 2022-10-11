@@ -1,10 +1,26 @@
 class Solution:
     def uniquePaths(self, m: int, n: int) -> int:
-        grid = [[0 for i in range(n-1)] + [1] for j in range(m-1)]
-        grid.append([1 for i in range(n)])
+        memo = {}
+        inbound = lambda x, y : 0 <= x < m and 0 <= y < n
 
-        for i in range(m-2, -1, -1):
-            for j in range(n - 2, -1, -1):
-                grid[i][j] = grid[i+1][j] + grid[i][j+1]
+        def topDown(row, col):
+            if (row, col) in memo:
+                return memo[(row, col)]
 
-        return grid[0][0]
+            if row == m - 1 and col == n - 1:
+                return 1
+
+            temp = 0
+            down = (row + 1, col)
+            right = (row, col + 1)
+
+            if inbound(right[0], right[1]):
+                memo[right] = topDown(right[0], right[1])
+                temp += memo[right]
+
+            if inbound(down[0], down[1]):
+                memo[down] = topDown(down[0], down[1])
+                temp += memo[down]
+
+            return temp
+        return topDown(0, 0)
