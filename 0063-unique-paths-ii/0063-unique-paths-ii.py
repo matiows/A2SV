@@ -1,22 +1,33 @@
 class Solution:
     def uniquePathsWithObstacles(self, grid: List[List[int]]) -> int:
+        memo = {}
         m = len(grid)
         n = len(grid[0])
-        
-        if grid[m-1][n-1] == 1:
-            return 0
-        
-        for i in range(m - 1, -1, -1):
-            for j in range(n - 1, -1, -1):
-                if i == m -1 and j == n - 1:
-                    grid[i][j] = 1
-                    continue
+        inbound = lambda x, y : 0 <= x < m and 0 <= y < n
 
-                if grid[i][j] != 1:
-                    if i + 1 < m:
-                        grid[i][j] += grid[i + 1][j]
-                    if j + 1 < n:
-                        grid[i][j] += grid[i][j + 1]
-                else:
-                    grid[i][j] = 0
-        return grid[0][0]
+        def topDown(row, col):
+            if (row, col) in memo:
+                return memo[(row, col)]
+
+            if grid[row][col] == 1:
+                memo[(row, col)] = 0
+                return memo[(row, col)]
+            
+            if row == m - 1 and col == n - 1:
+                return 1
+
+            temp = 0
+            down = (row + 1, col)
+            right = (row, col + 1)
+
+            if inbound(right[0], right[1]):
+                memo[right] = topDown(right[0], right[1])
+                temp += memo[right]
+
+            if inbound(down[0], down[1]):
+                memo[down] = topDown(down[0], down[1])
+                temp += memo[down]
+
+            return temp
+        
+        return topDown(0, 0)
