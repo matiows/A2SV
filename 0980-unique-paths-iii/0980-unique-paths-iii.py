@@ -15,17 +15,14 @@ class Solution:
             if grid[row][col] == -1:
                 return 
             
-            # print(grid[row][col], check, len(visited))
             if grid[row][col] == 2 and len(visited) == check:
-                # print(visited)
                 result += 1
                 return
             
             visited.add((row, col))
-            copy = visited.copy()
             for x, y in directions:
-                if inbound(row + x, col + y) and (row + x, col + y) not in copy:
-                    dfs(row + x, col + y, copy.copy())
+                if inbound(row + x, col + y) and (row + x, col + y) not in visited:
+                    dfs(row + x, col + y, visited.copy())
 
         row, col = 0, 0
         for i in range(m):
