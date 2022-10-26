@@ -11,17 +11,12 @@ class Solution:
             count = 1
             for i in range(index + 1, len(nums)):
                 if nums[i] > nums[index]:
-                    if i in memo:
-                        count = max(count, memo[i] + 1)
-                    else:
-                        count = max(count, dp(i) + 1)
+                    count = max(count, dp(i) + 1)
              
             memo[index] = count
             return memo[index]
+        
         answer = 1
         for i in range(len(nums)):
-            if i in memo:
-                answer = max(answer, memo[i])
-            else:
-                answer = max(answer, dp(i))
+            answer = max(answer, dp(i))
         return answer
