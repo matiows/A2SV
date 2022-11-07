@@ -5,11 +5,9 @@ class TrieNode:
         self.parent = parent
         self.word = None
         
-
 class Trie:
     def __init__(self):
         self.root = TrieNode()
-    
     
     def addWord(self, word: str) -> None:
         node = self.root
@@ -17,8 +15,7 @@ class Trie:
             if c not in node.children:
                 node.children[c] = TrieNode(val=c, parent=node)
             node = node.children[c]
-        node.word = word
-        
+        node.word = word    
     
     def prune(self, node: TrieNode) -> None:
         node.word = None
