@@ -17,7 +17,7 @@ class Solution:
             return True
         
         def putQueen(row):
-            if row == n - 1:
+            if row == n:
                 temp = []
                 for r in current:
                     temp.append(''.join(r))
@@ -26,18 +26,20 @@ class Solution:
                 return
             
             for new_col in range(n):
-                if checkCell(row + 1, new_col):
-                    current[row + 1][new_col] = 'Q'
+                if checkCell(row, new_col):
+                    current[row][new_col] = 'Q'
                     col_visited.add(new_col)
-                    diag_visited.add(row + 1 + new_col)
-                    inv_diag_visited.add(row + 1 - new_col)
+                    diag_visited.add(row + new_col)
+                    inv_diag_visited.add(row - new_col)
+                    
                     putQueen(row + 1)
-                    current[row + 1][new_col] = '.'
+                    
+                    current[row][new_col] = '.'
                     col_visited.remove(new_col)
-                    diag_visited.remove(row + 1 + new_col)
-                    inv_diag_visited.remove(row + 1 - new_col)
+                    diag_visited.remove(row + new_col)
+                    inv_diag_visited.remove(row - new_col)
                       
-        putQueen(-1)
+        putQueen(0)
         return answer
                 
         
