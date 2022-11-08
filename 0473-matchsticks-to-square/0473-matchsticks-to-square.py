@@ -6,6 +6,7 @@ class Solution:
         target = total // 4
         length = len(matchsticks)
         used = [False] * length
+        matchsticks.sort(reverse = True)
         
         def backtrack(index, count, stick_sum):
             if count == 0:
