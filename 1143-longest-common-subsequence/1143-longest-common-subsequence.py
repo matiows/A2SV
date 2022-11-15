@@ -1,35 +1,12 @@
 class Solution:
     def longestCommonSubsequence(self, text1: str, text2: str) -> int:
-        memo = {}
+        dp = [[0 for _ in range(len(text1) + 1)] for _ in range (len(text2) + 1)]
         
-        def topDown(index1, index2):
-            if index1 > len(text1) - 1 or index2 > len(text2) - 1:
-                return 0
-            
-            check = int(text1[index1] == text2[index2])
-            
-            if index1 == len(text1) - 1 and index2 == len(text2) - 1:
-                return check
-            
-            if (index1, index2) in memo:
-                return memo[(index1, index2)]
-            
-            result = 0
-            if check:
-                result = topDown(index1 + 1, index2 + 1) + 1
-                memo[(index1, index2)] = result
-                return result
-            
-            else:
-                if index1 < len(text1) - 1:
-                    result = max(result, topDown(index1 + 1, index2))
-                
-                if index2 < len(text2) - 1:
-                    result = max(result, topDown(index1, index2 + 1))
+        for i in range(len(dp) - 2, -1, -1):
+            for j in range(len(dp[0]) - 2 ,-1, -1):
+                if text2[i] == text1[j]:
+                    dp[i][j] = 1 + dp[i+1][j+1]
+                else:
+                    dp[i][j] = max(dp[i+1][j], dp[i][j+1])
                     
-            memo[(index1, index2)] = result
-            return result
-        
-        answer = topDown(0,0)
-            
-        return answer
+        return dp[0][0]
