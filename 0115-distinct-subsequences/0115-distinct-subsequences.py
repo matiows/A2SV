@@ -8,7 +8,7 @@ class Solution:
                 return memo[(ss, tt)]
             if tt == t_length:
                 return 1
-            if ss == s_length or s_length - ss < t_length - tt:
+            if s_length - ss < t_length - tt or ss == s_length:
                 return 0
             result = 0
             if t[tt] == s[ss]:
