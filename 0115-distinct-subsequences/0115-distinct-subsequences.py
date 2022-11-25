@@ -1,10 +1,6 @@
 class Solution:
     def numDistinct(self, s: str, t: str) -> int:
         memo = {}
-        t_length = len(t)
-        s_length = len(s)
-        s = list(s)
-        t = list(t)
         def match(ss, tt):
             if (ss, tt) in memo:
                 return memo[(ss, tt)]
@@ -18,4 +14,8 @@ class Solution:
             result += match(ss + 1, tt)
             memo[(ss, tt)] = result
             return result
+        t_length = len(t)
+        s_length = len(s)
+        s = list(s)
+        t = list(t)
         return match(0, 0)
