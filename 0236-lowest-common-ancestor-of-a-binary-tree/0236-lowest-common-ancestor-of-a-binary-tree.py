@@ -14,7 +14,7 @@ class Solution:
             if not node:
                 return False
             
-            if node.val == p.val or node.val == q.val:
+            if node == p or node == q:
                 ancestor = node
                 return True
                 
