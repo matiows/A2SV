@@ -1,7 +1,6 @@
 class Solution:
     def canReach(self, arr: List[int], start: int) -> bool:
         visited = set()
-        @lru_cache(None)
         def helper(index):
             if arr[index] == 0:
                 return True
