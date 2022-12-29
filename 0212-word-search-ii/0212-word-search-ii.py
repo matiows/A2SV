@@ -39,7 +39,6 @@ class Solution:
         answer = set()
 
         def backtrack(row, col, node):
-            # print(board[row][col])
             char = board[row][col]
             
             if char not in node.children:
