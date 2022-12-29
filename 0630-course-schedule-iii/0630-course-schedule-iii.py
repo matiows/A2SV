@@ -3,8 +3,6 @@ class Solution:
         heap = []
         courses.sort(key = lambda x: (x[1], x[0]))
         time = 0
-        answer = 0
-        result = 0
         
         for duration, last in courses:
             if duration > last:
@@ -16,9 +14,6 @@ class Solution:
             while time > last and heap:
                 value = heappop(heap)
                 time += value
-                answer -= 1
             
-            answer += 1
-            result = max(answer, result)
             
-        return result
+        return len(heap)
