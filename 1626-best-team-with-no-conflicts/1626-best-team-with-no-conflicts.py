@@ -1,16 +1,15 @@
 class Solution:
     def bestTeamScore(self, scores: List[int], ages: List[int]) -> int:
-        team = list(zip(ages,scores))
-        team.sort()
-        n = len(ages)
-        dp = [0]*n
-
-        for i in range(n):
-            curr = team[i][1]
-            dp[i] = curr
-
-            for j in range(i):
-                if team[j][1] <= curr:
-                    dp[i] = max(dp[i], dp[j]+curr)
-            
+        num_players = len(scores)
+        age_score = list(zip(ages, scores))
+        age_score.sort()
+        
+        dp = [0 for i in range(num_players)]
+        dp[-1] = age_score[-1][1]
+        for i in range(num_players - 2, -1, -1):
+            temp_max = 0
+            for j in range(i + 1, num_players):
+                if age_score[j][1] >= age_score[i][1]:
+                    temp_max = max(temp_max, dp[j])
+            dp[i] = age_score[i][1] + temp_max
         return max(dp)
