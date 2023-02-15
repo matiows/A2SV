@@ -1,34 +1,35 @@
 class Solution:
     def checkValidString(self, s: str) -> bool:
-        
-        stack = []
         memo = {}
-        
-        def checker(idx, stack):
-            if idx >= len(s):
-                if not stack:
-                    return True
-                else:
-                    return False
-              
+        def isValid(idx, stack):
+            if idx == len(s):
+                return len(stack) == 0
+            
             if (idx, tuple(stack)) in memo:
                 return memo[(idx, tuple(stack))]
             
-            if s[idx] == "(":
-                stack.append("(")
-                return checker(idx + 1, stack)
-            elif s[idx] == ")":
+            ch = s[idx]    
+            if ch == '(':
+                stack.append(ch)
+                return isValid(idx + 1, stack)
+            
+            elif ch == ')':
                 if stack:
                     stack.pop()
-                    return checker(idx + 1, stack)
+                    return isValid(idx + 1, stack)
+                
+                return False
+            
             else:
-                one = checker(idx + 1, stack.copy())
-                two = checker(idx + 1, stack + ["("])
-                three = checker(idx + 1, stack.copy()[:-1])
+                empty = isValid(idx + 1, stack.copy())
                 
-                memo[(idx, tuple(stack))] = one or two or three
-                return one or two or three
-            
-        return checker(0, stack)
+                closing = False
+                if stack:
+                    closing = isValid(idx + 1, stack.copy()[:-1])
                 
+                opening = isValid(idx + 1, stack + ['('])
+                
+                memo[(idx, tuple(stack))] = empty or opening or closing
+                return empty or opening or closing
             
+        return isValid(0, [])
