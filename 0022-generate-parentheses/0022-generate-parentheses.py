@@ -10,7 +10,7 @@ class Solution:
             if op_count > 0:
                 dp(op_count - 1, cl_count, path + ["("])
         
-            if op_count == 0 or op_count < cl_count:
+            if op_count < cl_count:
                 dp(op_count, cl_count - 1, path + [")"])
                 
         dp(n, n, [])
