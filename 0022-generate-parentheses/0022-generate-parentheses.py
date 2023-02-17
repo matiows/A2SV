@@ -8,10 +8,14 @@ class Solution:
                 return
             
             if op_count > 0:
-                dp(op_count - 1, cl_count, path + ["("])
+                path.append("(")
+                dp(op_count - 1, cl_count, path)
+                path.pop()
         
             if op_count < cl_count:
-                dp(op_count, cl_count - 1, path + [")"])
+                path.append(")")
+                dp(op_count, cl_count - 1, path)
+                path.pop()
                 
         dp(n, n, [])
         
